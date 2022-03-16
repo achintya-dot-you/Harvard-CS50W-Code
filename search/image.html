@@ -3,16 +3,21 @@
 
 <head>
     <title>Search</title>
-    <link rel="stylesheet" href="C:\Users\akansha\Desktop\Harvard CS50 Web Development\search\style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div>
-        <a href="index.html">Google Search</a><br>
-        <a href="advanced.html">Advanced Search</a>
+        <div class="links">
+            <a class="bittons" href="index.html"><button>Google Search</button></a><br>
+            <a class="bittons" href="advanced.html"><button>Advanced Search</button></a>
+        </div>
+        <div style="display:flex; align-items: center; justify-content: center;">
+            <img src="google.png" alt="google image" style="width:20%; height:20%;">
+        </div>
+        <div>
         <form action="https://google.com/images" style="text-align:center;">
             <input class="textbar" type="text" name="q"><br><br>
-            <input class="textbar" type="submit" value="Image Search">
+            <input type="submit" value="Image Search">
         </form>
 
     </div>
