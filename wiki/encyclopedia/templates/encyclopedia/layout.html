@@ -11,7 +11,7 @@
     <body>
         <div class="row">
             <div class="sidebar col-lg-2 col-md-3">
-                <h2>Wiki</h2>
+                <h2><a href="{% url 'index' %}" style="color: #000;">Wiki</a></h2>
 
                 <form method="post">
                     {% csrf_token %}
@@ -21,7 +21,7 @@
                     <a href="{% url 'index' %}">Home</a>
                 </div>
                 <div>
-                    Create New Page
+                    <a href="/newpage">Create New Page</a>
                 </div>
                 <div>
                     Random Page
