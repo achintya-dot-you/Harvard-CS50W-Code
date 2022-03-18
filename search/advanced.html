@@ -3,20 +3,31 @@
 
 <head>
     <title>Search</title>
-    <link rel="stylesheet" href="C:\Users\akansha\Desktop\Harvard CS50 Web Development\search\style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div>
-        <h1 style="text-align: center;">Find pages with.…</h1>
-        <a href="index.html">Google Search</a><br>
-        <a href="advanced.html">Advanced Search</a>
-        
-        <form action="https://google.com/images" style="text-align:center;">
+    <div class="links">
+        <a class="bittons" href="index.html"><button>Google Search</button></a><br>
+        <a class="bittons" href="image.html"><button>Image Search</button> </a>
+    </div>
+    <div style="display:flex; align-items: center; justify-content: center;">
+        <img src="google.png" alt="google image" style="width:20%; height:20%;">
+    </div>
+    <div style="margin-top:-20px">
+        <h1 style="text-align: left;">Find pages with…</h1>
+        <form action="https://google.com/search" style="text-align:left;">
             all these words:
-            <input class="textbar" type="text" name="q"><br><hr>
-
-            <input class="textbar" type="submit" value="Image Search">
+            <input class="textbar" type="text" name="as_q"><br><br>
+            this exact word or phrase:
+            <input class="textbar" type="text" name="as_epq"><br><br>
+            any of these words:
+            <input class="textbar" type="text" name="as_oq"><br><br>
+            none of these words:
+            <input class="textbar" type="text" name="as_eq"><br><br>
+            <hr>
+            <input type="submit" value="Advanced Search" style="background-color:#32a9db; color: white;">
+            
         </form>
 
     </div>

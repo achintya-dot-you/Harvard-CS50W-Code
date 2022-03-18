@@ -1,9 +1,17 @@
-div{
+.links{
     text-align: right;
 }
+
 .textbar{
     border-radius: 50px;
+    height:100%;
+    padding: 10px 5px;
+
 }
+
 body{
-    background-color: bisque;
+    background-color: white;
+}
+.bittons{
+    background-color: cadetblue;
 }
