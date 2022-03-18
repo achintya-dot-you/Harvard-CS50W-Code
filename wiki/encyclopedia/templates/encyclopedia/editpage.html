@@ -6,7 +6,6 @@ Edit : {{queryName}}
 {% block body %}
 <form method="post">
     {% csrf_token %}
-    Title : <input type="text" name="title" id="title" value = "{{queryName}}"><br><br>
     <label for="content"> Markdown Content :
         <textarea name="content" id="content">{{query}}</textarea>
     </label><br><br>

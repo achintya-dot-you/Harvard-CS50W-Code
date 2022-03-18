@@ -8,34 +8,16 @@ mkdown = Markdown()
 
 
 def index(request):
-    if request.method == "POST":
-        query = request.POST.get('q')
-        queryVar = util.get_entry(query)
-        if queryVar != None:
-
-            return render(request, "encyclopedia/query.html", {
-                "query": mkdown.convert(queryVar),
-                "queryName" : query.capitalize()
-            })
-        else:
-            entries = []
-            for entry in util.list_entries():
-                if query.lower() in entry.lower():
-                    entries.append(entry)
-            return render(request, "encyclopedia/search.html", {
-                "query": query,
-                "entries": entries
-            })
-
-    return render(request, "encyclopedia/index.html", {
+        return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries()
     })
 
 
 def query(request, query):
     queryDup = util.get_entry(query)
+    print(queryDup)
     if queryDup!=None:
-        queryMarkdown = mkdown.convert(query)
+        queryMarkdown = mkdown.convert(queryDup)
         return render(request, "encyclopedia/query.html", {
             "query": queryMarkdown,
             "queryName" : query.capitalize()
@@ -67,16 +49,15 @@ def editPage(request, query):
                 "queryName" : query.capitalize()
             })
     else:
-        newTitle = request.POST.get("title")
         newContent = request.POST.get("content")
         print(newContent)
         os.remove(f"entries/{query.capitalize()}.md")
-        fileToEdit = open(f"entries/{newTitle.capitalize()}.md", "w")
+        fileToEdit = open(f"entries/{query.capitalize()}.md", "w")
         fileToEdit.write(f"{newContent}")
         fileToEdit.close()
         return render(request, "encyclopedia/query.html", {
-            "query": mkdown.convert(util.get_entry(newTitle)),
-            "queryName" : newTitle.capitalize()
+            "query": mkdown.convert(util.get_entry(query.capitalize())),
+            "queryName" : query.capitalize()
         })
 
 def randomPage(request):
@@ -91,3 +72,22 @@ def randomPage(request):
         "queryName" : randomEntry.capitalize()
     })    
         
+def search(request):
+    if request.method=="POST":
+        query = request.POST.get('q')
+        queryVar = util.get_entry(query)
+        if queryVar != None:
+
+            return render(request, "encyclopedia/query.html", {
+                "query": mkdown.convert(queryVar),
+                "queryName": query.capitalize()
+            })
+        else:
+            entries = []
+            for entry in util.list_entries():
+                if query.lower() in entry.lower():
+                    entries.append(entry)
+            return render(request, "encyclopedia/search.html", {
+                "query": query,
+                "entries": entries
+            })
