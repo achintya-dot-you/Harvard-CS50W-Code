@@ -1,11 +1,11 @@
 {% extends "encyclopedia/layout.html" %}
 {% block title %}
 Create a new page
+<!--
 <style>
     label textarea {
-        vertical-align:top;
     }
-</style>
+</style>-->
 {% endblock %}
 
 {% block body %}
@@ -13,9 +13,9 @@ Create a new page
 {% csrf_token %}
 Title : <input type="text" name="title" id="title"><br><br>
 <label for="content"> Markdown Content :
-    <textarea name="content" id="content" cols="30" rows="10"></textarea>
+    <textarea name="content" id="content"></textarea>
 </label><br><br>
-    <input type="submit" style="text-align:left;" value="your mom">
+    <input type="submit" style="text-align:left;" value="Submit Form">
 </form>
 
 
