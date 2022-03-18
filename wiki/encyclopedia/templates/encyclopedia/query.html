@@ -7,5 +7,5 @@
 
 {{ query|safe }}
 <br><br><br>
-Edit this page : <a href="edit/{{query}}">{{query}}</a>
+Edit this page : <a href="{% url 'edit' queryName%}">{{queryName}}</a>
 {% endblock %}

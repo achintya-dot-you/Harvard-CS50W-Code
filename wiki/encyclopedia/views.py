@@ -3,6 +3,7 @@ from . import util
 from django.shortcuts import render
 from markdown2 import Markdown
 import os
+import random
 mkdown = Markdown()
 
 
@@ -13,7 +14,8 @@ def index(request):
         if queryVar != None:
 
             return render(request, "encyclopedia/query.html", {
-                "query": mkdown.convert(queryVar)
+                "query": mkdown.convert(queryVar),
+                "queryName" : query.capitalize()
             })
         else:
             entries = []
@@ -31,21 +33,27 @@ def index(request):
 
 
 def query(request, query):
-    return render(request, "encyclopedia/query.html", {
-        "query": mkdown.convert(util.get_entry(query))
-    })
+    queryDup = util.get_entry(query)
+    if queryDup!=None:
+        queryMarkdown = mkdown.convert(query)
+        return render(request, "encyclopedia/query.html", {
+            "query": queryMarkdown,
+            "queryName" : query.capitalize()
+        })
+    else:
+        return render(request, "encyclopedia/404error.html")
 
 def createPage(request):
     if request.method == "POST":
         title = request.POST.get("title")
-        if util.get_entry(title):return HttpResponse("qwq no :p")
+        if util.get_entry(title):return HttpResponse(f"An entry already exists with the name '{title.capitalize()}' <br> Do you want to <a href='edit/{title.capitalize()}'>edit it</a> instead?")
         newfile = open(f"entries/{title.capitalize()}.md",'w')
         content = request.POST.get('content')
-        newfile.write(f"#{title.capitalize()}\n")
         newfile.write(f"{content}")
         newfile.close()
-        return render(request, "encyclopedia/index.html", {
-            "entries": util.list_entries()
+        return render(request, "encyclopedia/query.html", {
+            "query": mkdown.convert(util.get_entry(title)),
+            "queryName": title.capitalize()
         })
     return render(request, "encyclopedia/newpage.html")
 
@@ -60,16 +68,26 @@ def editPage(request, query):
             })
     else:
         newTitle = request.POST.get("title")
-        newContent = request.POST.get("title")
-        
+        newContent = request.POST.get("content")
+        print(newContent)
         os.remove(f"entries/{query.capitalize()}.md")
         fileToEdit = open(f"entries/{newTitle.capitalize()}.md", "w")
-        fileToEdit.write(f"#{newTitle.capitalize()}\n")
         fileToEdit.write(f"{newContent}")
         fileToEdit.close()
         return render(request, "encyclopedia/query.html", {
-            "query": util.get_entry(newTitle),
-            "queryName" : newTitle
+            "query": mkdown.convert(util.get_entry(newTitle)),
+            "queryName" : newTitle.capitalize()
         })
-        
+
+def randomPage(request):
+    entries = []
+    for entry in util.list_entries():
+        entries.append(entry)
+    
+    randomEntry = random.choice(entries)
+
+    return render(request, f"encyclopedia/query.html", {
+        "query" : mkdown.convert(util.get_entry(randomEntry)),
+        "queryName" : randomEntry.capitalize()
+    })    
         
